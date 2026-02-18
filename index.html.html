@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weymouth town centre – service map</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  <style>
+    html, body { height: 100%; margin: 0; }
+    #map { height: 100%; }
+    .legend {
+      background: rgba(255,255,255,0.95);
+      padding: 10px 12px;
+      border-radius: 8px;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.2);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      font-size: 13px;
+      line-height: 1.2;
+    }
+    .legend .row { display: flex; align-items: center; margin: 6px 0; }
+    .legend .swatch { width: 12px; height: 12px; border-radius: 50%; margin-right: 8px; border: 1px solid rgba(0,0,0,0.25); }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      color: white;
+      font-weight: 800;
+      font-size: 11px;
+      letter-spacing: 0.2px;
+      border: 2px solid rgba(255,255,255,0.85);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.35);
+    }
+  </style>
+</head>
+<body>
+<div id="map"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+  const map = L.map('map', { scrollWheelZoom: true }).setView([50.6106, -2.4549], 16);
+
+  // OpenStreetMap basemap
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  const points = [{"name": "REACH (Waythrough) – Weymouth Drug & Alcohol Advisory Service (Hub)", "category": "Substance recovery service", "address": "Weymouth Coffee Tavern, 24 High West Street, Weymouth, Dorset, DT4 8JH", "lat": 50.606518, "lon": -2.4586327, "color": "#7B61FF", "symbol": "R"}, {"name": "The Lantern Trust (HQ)", "category": "Charity / support service", "address": "2 Ranelagh Road, Weymouth, Dorset, DT4 7JD", "lat": 50.615406, "lon": -2.4538276, "color": "#FF8A00", "symbol": "L"}, {"name": "The Bridges Medical Centre (GP surgery)", "category": "Healthcare (GP)", "address": "26 Commercial Road, Weymouth, Dorset, DT4 7DW", "lat": 50.613365, "lon": -2.455959, "color": "#2EAD5B", "symbol": "G"}, {"name": "Citizens Advice (Central Dorset Citizens Advice – Weymouth)\n(Weymouth Library & Learning Centre)", "category": "Advice service", "address": "Weymouth Library and Learning Centre, Great George Street, Weymouth, Dorset, DT4 8NN", "lat": 50.61089, "lon": -2.4555484, "color": "#E53935", "symbol": "C"}, {"name": "Lloyds Bank – Weymouth Branch", "category": "Bank", "address": "92 St Mary Street, Weymouth, Dorset, DT4 8PA", "lat": 50.61026, "lon": -2.454113, "color": "#1E88E5", "symbol": "£"}, {"name": "Halifax – Weymouth Branch", "category": "Bank", "address": "85 St Mary Street, Weymouth, Dorset, DT4 8PJ", "lat": 50.609737, "lon": -2.4541888, "color": "#1E88E5", "symbol": "£"}, {"name": "Nationwide Building Society – Weymouth Branch", "category": "Bank", "address": "9 St Mary Street, Weymouth, Dorset, DT4 8PX", "lat": 50.61054, "lon": -2.453683, "color": "#1E88E5", "symbol": "£"}, {"name": "HSBC – Weymouth Branch", "category": "Bank", "address": "18 St Mary Street, Weymouth, Dorset, DT4 8PH", "lat": 50.609921, "lon": -2.453831, "color": "#1E88E5", "symbol": "£"}, {"name": "NatWest – Weymouth Branch", "category": "Bank", "address": "76 St Thomas Street, Weymouth, Dorset, DT4 8HU", "lat": 50.60982, "lon": -2.454916, "color": "#1E88E5", "symbol": "£"}, {"name": "Santander – Weymouth Branch", "category": "Bank", "address": "73 St Thomas Street, Weymouth, Dorset, DT4 8EL", "lat": 50.609676, "lon": -2.454943, "color": "#1E88E5", "symbol": "£"}, {"name": "Barclays Local – Weymouth (in the Library)", "category": "Bank", "address": "The Library and Learning Centre, Great George Street, Weymouth, Dorset, DT4 8NN", "lat": 50.61089, "lon": -2.4552484, "color": "#1E88E5", "symbol": "£"}, {"name": "Weymouth Post Office (services)", "category": "Post Office", "address": "87 St Thomas Street, Weymouth, Dorset, DT4 8EN", "lat": 50.61069, "lon": -2.4548266, "color": "#6D4C41", "symbol": "PO"}, {"name": "Weymouth Jobcentre Plus", "category": "Jobcentre", "address": "Westwey House, Westwey Road, Weymouth, Dorset, DT4 8TG", "lat": 50.607437, "lon": -2.4599793, "color": "#00897B", "symbol": "J"}, {"name": "The Dry Dock (non-alcoholic pub)", "category": "The Dry Dock", "address": "6–7 St Thomas Street, Weymouth, Dorset, DT4 8EW", "lat": 50.61073, "lon": -2.4543297, "color": "#8E24AA", "symbol": "D"}, {"name": "You are here", "category": "You are here", "address": "Current location pin", "lat": 50.610390412597226, "lon": -2.4591363109834723, "color": "#000000", "symbol": "YOU"}, {"name": "Weymouth Railway Station", "category": "Rail station", "address": "Weymouth station, King Street, Weymouth, Dorset, DT4 7BN", "lat": 50.615392, "lon": -2.454248, "color": "#455A64", "symbol": "rail"}, {"name": "Weymouth Minor Injuries / Urgent Care Centre", "category": "Minor injuries", "address": "Weymouth Community Hospital, 3 Melcombe Avenue, Weymouth, Dorset, DT4 7TB\nOpen daily: 08:00–20:00", "lat": 50.621223, "lon": -2.4507987, "color": "#D32F2F", "symbol": "MI"}, {"name": "Weymouth Police Station (West Weymouth)", "category": "Police station", "address": "Radipole Lane, Weymouth, Dorset, DT4 9WW\nCounter hours: Mon–Fri 08:00–17:30; Sat 09:00–13:00 & 14:00–16:30", "lat": 50.62007, "lon": -2.4827776, "color": "#37474F", "symbol": "POL"}, {"name": "Active Fitness Club Weymouth", "category": "Gym", "address": "Newstead Road, Weymouth, DT4 8JE\nHours: Mon–Thu 06:00–21:00; Fri 06:00–20:00; Sat–Sun 08:00–16:00", "lat": 50.608618, "lon": -2.461757, "color": "#FB8C00", "symbol": "AF"}];
+
+  function makeDivIcon(color, symbol) {
+    const html = `<div class="pill" style="background:${color}">${symbol}</div>`;
+    return L.divIcon({ html, className: '', iconSize: [28,28], iconAnchor: [14,14] });
+  }
+
+  const bounds = [];
+  points.forEach(p => {
+    const icon = makeDivIcon(p.color, p.symbol);
+    const marker = L.marker([p.lat, p.lon], { icon }).addTo(map);
+    marker.bindPopup(`<b>${p.name}</b><br/><span style='color:#555'>${p.category}</span><br/>${p.address}`);
+    bounds.push([p.lat, p.lon]);
+  });
+
+  if (bounds.length) { map.fitBounds(bounds, { padding: [30, 30] }); }
+
+  // Legend
+  const legend = L.control({ position: 'topright' });
+  legend.onAdd = function() {
+    const div = L.DomUtil.create('div', 'legend');
+    div.innerHTML = `<b>Key</b>` +
+      `<div class='row'><span class='swatch' style='background:#000000'></span>You are here</div><div class='row'><span class='swatch' style='background:#455A64'></span>Weymouth Railway Station</div><div class='row'><span class='swatch' style='background:#1E88E5'></span>Banks</div><div class='row'><span class='swatch' style='background:#6D4C41'></span>Post Office services</div><div class='row'><span class='swatch' style='background:#00897B'></span>Jobcentre</div><div class='row'><span class='swatch' style='background:#FB8C00'></span>Active Fitness</div><div class='row'><span class='swatch' style='background:#8E24AA'></span>The Dry Dock</div><div class='row'><span class='swatch' style='background:#7B61FF'></span>REACH substance recovery</div><div class='row'><span class='swatch' style='background:#FF8A00'></span>Lantern Trust</div><div class='row'><span class='swatch' style='background:#2EAD5B'></span>GP surgery</div><div class='row'><span class='swatch' style='background:#D32F2F'></span>Minor Injuries (08:00–20:00)</div><div class='row'><span class='swatch' style='background:#37474F'></span>Weymouth Police Station</div><div class='row'><span class='swatch' style='background:#E53935'></span>Citizens Advice</div>` +
+      `<div style='margin-top:8px;color:#666;font-size:12px;'>Tip: click markers for details.</div>`;
+    return div;
+  };
+  legend.addTo(map);
+</script>
+</body>
+</html>
